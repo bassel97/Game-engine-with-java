@@ -28,6 +28,12 @@ public class GameObject {
 		}
 	}
 
+	public void end() {
+		for (Component component : components) {
+			component.end();
+		}
+	}
+	
 	public GameObject(String name) {
 		this.name = name;
 	}

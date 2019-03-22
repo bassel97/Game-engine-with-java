@@ -36,4 +36,10 @@ public class MeshRenderer extends Component {
 		GL30.glBindVertexArray(0);
 	}
 
+	@Override
+	public void end() {
+		// TODO Auto-generated method stub
+		model.removeFromGPU();
+	}
+	
 }

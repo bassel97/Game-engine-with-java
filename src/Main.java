@@ -8,7 +8,7 @@ public class Main {
 
 		System.out.println("Game Started");
 
-		GE_Window ge_window = new GE_Window("Cards game", 640, 480, false);
+		GE_Window ge_window = new GE_Window("Cards game", 1280, 720, true);
 
 		ge_window.init();
 
@@ -23,9 +23,11 @@ public class Main {
 
 			ge_window.swapBuffers();
 		}
-
+		
 		ge_window.stop();
 
+		scene1.end();
+		
 		System.out.println("Game Closed");
 
 	}

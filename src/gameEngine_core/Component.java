@@ -9,6 +9,8 @@ public abstract class Component {
 	public abstract void start();
 
 	public abstract void update();
+	
+	public abstract void end();
 
 	public static ArrayList<Component> components = new ArrayList<Component>();
 

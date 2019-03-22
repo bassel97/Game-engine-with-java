@@ -14,4 +14,10 @@ public abstract class SceneBase {
 		}
 	}
 
+	public void end() {
+		for (GameObject gameObject : GameObject.gameObjects) {
+			gameObject.end();
+		}
+	}
+	
 }
