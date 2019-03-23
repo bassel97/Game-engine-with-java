@@ -5,10 +5,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
 		System.out.println("Game Started");
 
-		GE_Window ge_window = new GE_Window("Cards game", 1280, 720, true);
+		GE_Window ge_window = new GE_Window("Cards game", 512, 512, false);
 
 		ge_window.init();
 
@@ -23,11 +23,11 @@ public class Main {
 
 			ge_window.swapBuffers();
 		}
-		
+
 		ge_window.stop();
 
 		scene1.end();
-		
+
 		System.out.println("Game Closed");
 
 	}
