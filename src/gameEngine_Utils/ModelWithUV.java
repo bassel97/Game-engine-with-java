@@ -52,5 +52,18 @@ public class ModelWithUV extends Model {
 
 		return m;
 	}
+	
+	public static ModelWithUV getCardModelWithUVs() {
+		ModelWithUV m = new ModelWithUV(
+				new float[] { -1.05f, 1.525f, 0.0f, 1.05f, 1.525f, 0.0f, -1.05f, -1.52f, 0.0f, 1.05f, -1.525f, 0.0f },
+
+				new float[] { 0, 0, 1, 0, 0, 1, 1, 1 },
+
+				new int[] { 0, 2, 1, 1, 2, 3 }
+
+		);
+
+		return m;
+	}
 
 }

@@ -3,8 +3,11 @@ package shaders;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.FloatBuffer;
 
+import org.joml.Matrix4f;
 import org.joml.Vector4f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL30;
 
 public class Shader {
@@ -76,6 +79,13 @@ public class Shader {
 	public void setUniformVec4(String name, Vector4f vec4) {
 		int id = GL30.glGetUniformLocation(programId, name);
 		GL30.glUniform4f(id, vec4.x, vec4.y, vec4.z, vec4.w);		
+	}
+	
+	public void setUniformMat4(String name, Matrix4f vec4) {
+		int id = GL30.glGetUniformLocation(programId, name);
+		FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
+		vec4.get(buffer);
+		GL30.glUniformMatrix4fv(id, false, buffer);
 	}
 	
 	public void setUniformFloat(String name, float val) {

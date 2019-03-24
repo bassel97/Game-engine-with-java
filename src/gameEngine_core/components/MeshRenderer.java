@@ -51,6 +51,11 @@ public class MeshRenderer extends Component {
 		
 		shader.use();
 		
+		System.out.println(gameObject.name);
+		System.out.println(gameObject.getTransformationMatrix());
+		
+		shader.setUniformMat4("transformationMatrix", gameObject.getTransformationMatrix());
+		
 		GL30.glBindVertexArray(model.getVertexArrayID());
 
 		GL30.glEnableVertexAttribArray(0);

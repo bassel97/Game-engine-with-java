@@ -2,6 +2,8 @@ package gameEngine_core;
 
 import java.util.ArrayList;
 
+import org.joml.Matrix4f;
+
 public class GameObject {
 
 	public static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -14,6 +16,10 @@ public class GameObject {
 
 	public GameObject() {
 		gameObjects.add(this);
+	}
+	
+	public GameObject(String name) {
+		this.name = name;
 	}
 
 	public void start() {
@@ -34,8 +40,12 @@ public class GameObject {
 		}
 	}
 	
-	public GameObject(String name) {
-		this.name = name;
+	public Matrix4f getTransformationMatrix() {
+		return transform.getTransformMatrix();
+	}
+	
+	public void setTransformParent(Transform transform) {
+		this.transform.parent = transform;
 	}
 
 	public void addComponent(Component component) {
