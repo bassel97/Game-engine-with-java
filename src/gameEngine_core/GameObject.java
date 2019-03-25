@@ -20,6 +20,7 @@ public class GameObject {
 	
 	public GameObject(String name) {
 		this.name = name;
+		gameObjects.add(this);
 	}
 
 	public void start() {

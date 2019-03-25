@@ -8,7 +8,7 @@ public class Main {
 		
 		System.out.println("Game Started");
 
-		GE_Window ge_window = new GE_Window("Cards game", 512, 512, false);
+		GE_Window ge_window = new GE_Window("Cards game", 1920, 1080, true);
 
 		ge_window.init();
 

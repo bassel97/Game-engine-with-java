@@ -6,6 +6,7 @@ import gameEngine_Utils.Model;
 import gameEngine_Utils.ModelWithUV;
 import gameEngine_Utils.Texture2D;
 import gameEngine_core.Component;
+import gameEngine_core.Scene;
 import shaders.Shader;
 
 public class MeshRenderer extends Component {
@@ -17,8 +18,12 @@ public class MeshRenderer extends Component {
 	Texture2D texture;
 	boolean hasTexture;
 
-	public MeshRenderer(Model model, Shader shader) {
+	Scene currentScene;
+
+	public MeshRenderer(Model model, Shader shader, Scene currentScene) {
 		super();
+
+		this.currentScene = currentScene;
 
 		this.model = model;
 
@@ -27,8 +32,10 @@ public class MeshRenderer extends Component {
 		shader.loadToGPU();
 	}
 
-	public MeshRenderer(ModelWithUV model, Shader shader, Texture2D texture) {
+	public MeshRenderer(ModelWithUV model, Shader shader, Texture2D texture, Scene currentScene) {
 		super();
+
+		this.currentScene = currentScene;
 
 		this.model = model;
 
@@ -48,14 +55,13 @@ public class MeshRenderer extends Component {
 
 	@Override
 	public void update() {
-		
+
 		shader.use();
-		
-		System.out.println(gameObject.name);
-		System.out.println(gameObject.getTransformationMatrix());
-		
+
 		shader.setUniformMat4("transformationMatrix", gameObject.getTransformationMatrix());
-		
+		shader.setUniformMat4("projectionMatrix", currentScene.renderingCam.getProjectionMatrix());
+		shader.setUniformMat4("viewMatrix", currentScene.renderingCam.getViewMatrix());
+
 		GL30.glBindVertexArray(model.getVertexArrayID());
 
 		GL30.glEnableVertexAttribArray(0);
