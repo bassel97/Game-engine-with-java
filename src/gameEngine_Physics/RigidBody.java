@@ -35,6 +35,7 @@ public class RigidBody extends Component {
 		if (collider != null) {
 			if (Collider.CheckCollions(collider)) {
 				gameObject.transform.position.x -= movementDircetion.x;
+				velocity.x = 0;
 			}
 		}
 
@@ -43,6 +44,7 @@ public class RigidBody extends Component {
 		if (collider != null) {
 			if (Collider.CheckCollions(collider)) {
 				gameObject.transform.position.y -= movementDircetion.y;
+				velocity.y = 0;
 			}
 		}
 		
@@ -51,6 +53,7 @@ public class RigidBody extends Component {
 		if (collider != null) {
 			if (Collider.CheckCollions(collider)) {
 				gameObject.transform.position.z -= movementDircetion.z;
+				velocity.z = 0;
 			}
 		}
 		

@@ -102,6 +102,10 @@ public class Scene extends SceneBase {
 		
 		if(Input.getKeyPress(KeyCode.space))
 			rbody2.velocity.y = 10;	
+		else
+			rbody2.velocity.y = 0;
+		
+		//System.out.println(Time.deltaTime);
 		
 		
 		renderingCam.gameObject.transform.position.x = (float) (Math.sin(Time.getTime() * 5) * 0.015f);

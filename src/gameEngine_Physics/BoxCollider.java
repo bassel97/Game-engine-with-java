@@ -1,10 +1,11 @@
 package gameEngine_Physics;
 
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 public class BoxCollider extends Collider {
 
-	private Vector3f boxBoundary = new Vector3f();
+	private Vector4f boxBoundary = new Vector4f();
 
 	public BoxCollider(float x, float y, float z) {
 		colliders.add(this);
@@ -19,12 +20,12 @@ public class BoxCollider extends Collider {
 		if (otherCollider.getClass() == getClass()) {
 			BoxCollider otherBoxCollider = (BoxCollider) otherCollider;
 
-			Vector3f scaledBoundaryBox = new Vector3f(boxBoundary);
+			Vector4f scaledBoundaryBox = new Vector4f(boxBoundary);
 			scaledBoundaryBox.x *= gameObject.transform.scale.x;
 			scaledBoundaryBox.y *= gameObject.transform.scale.y;
 			scaledBoundaryBox.z *= gameObject.transform.scale.z;
 
-			Vector3f otherScaledBoundaryBox = new Vector3f(otherBoxCollider.boxBoundary);
+			Vector4f otherScaledBoundaryBox = new Vector4f(otherBoxCollider.boxBoundary);
 			otherScaledBoundaryBox.x *= otherBoxCollider.gameObject.transform.scale.x;
 			otherScaledBoundaryBox.y *= otherBoxCollider.gameObject.transform.scale.y;
 			otherScaledBoundaryBox.z *= otherBoxCollider.gameObject.transform.scale.z;
