@@ -1,10 +1,12 @@
 package viewModule;
 
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL30;
+
+import gameEngine_core.Input;
 
 public class GE_Window {
 
@@ -17,6 +19,8 @@ public class GE_Window {
 
 	boolean isFullScreen;
 
+	GLFWKeyCallback keyCallback;
+	
 	public GE_Window() {
 		windowTitle = "New Window";
 
@@ -64,6 +68,8 @@ public class GE_Window {
 		GLFW.glfwSetWindowPos(windowId, (videoMode.width() - width) / 2, (videoMode.height() - height) / 2);
 
 		GLFW.glfwShowWindow(windowId);
+		
+		GLFW.glfwSetKeyCallback(windowId,keyCallback = new Input());
 	}
 
 	public boolean shouldClose() {
@@ -84,6 +90,14 @@ public class GE_Window {
 	
 	public void stop() {
 		GLFW.glfwTerminate();
+	}
+
+	public long getWindowId() {
+		return windowId;
+	}
+
+	public void setWindowId(long windowId) {
+		this.windowId = windowId;
 	}
 
 }

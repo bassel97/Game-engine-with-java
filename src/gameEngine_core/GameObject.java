@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import org.joml.Matrix4f;
 
+import gameEngine_Physics.BoxCollider;
+import gameEngine_Physics.Collider;
+import gameEngine_Physics.SphereCollider;
+
 public class GameObject {
 
 	public static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -53,6 +57,15 @@ public class GameObject {
 		components.add(component);
 		
 		component.gameObject = this;
+	}
+	
+	public Collider getCollider(){
+		for (Component component : components) {
+			if(component.getClass() == Collider.class || component.getClass() == SphereCollider.class || component.getClass() == BoxCollider.class){
+				return (Collider) component;
+			}
+		}
+		return null;
 	}
 
 }
