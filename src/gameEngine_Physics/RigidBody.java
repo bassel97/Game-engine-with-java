@@ -7,7 +7,7 @@ import gameEngine_core.Time;
 
 public class RigidBody extends Component {
 
-	public static Vector3f gravity = new Vector3f(0, -0.1f, 0);
+	public static Vector3f gravity = new Vector3f(0, -0.5f, 0);
 
 	public Vector3f velocity = new Vector3f();
 

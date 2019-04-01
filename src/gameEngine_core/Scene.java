@@ -87,9 +87,9 @@ public class Scene extends SceneBase {
 		//Here is the level logic
 		
 		if(Input.getKeyDown(KeyCode.right))
-			rbody2.velocity.x = 0.05f;		
+			rbody2.velocity.x = 0.5f;		
 		else if(Input.getKeyDown(KeyCode.left))
-			rbody2.velocity.x = -0.05f;
+			rbody2.velocity.x = -0.5f;
 		else
 			rbody2.velocity.x = 0;
 		

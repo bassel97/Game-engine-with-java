@@ -23,19 +23,27 @@ public class Main {
 		double time = Time.getTime();
 		double deltaTime_min = 1.0/60.0;
 		
+		int frameCounter = 0;
+		
 		while (!ge_window.shouldClose()) {
 			time = Time.getTime();
+			frameCounter++;
 			
-			ge_window.draw();
-
-			scene1.update();
-
-			ge_window.swapBuffers();
+			ge_window.draw();			
 		
 			while(Time.deltaTime < deltaTime_min)
 				Time.deltaTime = Time.getTime() - time;
+			//System.out.println("frameCounter : " + frameCounter);
+			if (frameCounter == 60) {
+				System.out.println("Current second " + Time.getTime());
+			}
 			
+			frameCounter %= 60;
 			//System.out.println(Time.deltaTime);
+			
+			scene1.update();
+
+			ge_window.swapBuffers();
 		}
 
 		ge_window.stop();
