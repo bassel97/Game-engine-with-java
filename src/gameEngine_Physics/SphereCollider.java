@@ -1,5 +1,6 @@
 package gameEngine_Physics;
 
+
 public class SphereCollider extends Collider {
 
 	float radius;
@@ -11,7 +12,7 @@ public class SphereCollider extends Collider {
 	}
 
 	@Override
-	public boolean canCollideWith(Collider otherCollider) {
+	public Collider canCollideWith(Collider otherCollider) {
 		
 		if(otherCollider.getClass() == getClass()){
 			SphereCollider otherSphereCollider = (SphereCollider)otherCollider;
@@ -22,10 +23,11 @@ public class SphereCollider extends Collider {
 			
 			float twoRadiiSqr = (float) Math.pow(radius + otherSphereCollider.radius,2);
 			
-			return sqrDistanceRs < twoRadiiSqr;
+			if(sqrDistanceRs < twoRadiiSqr)
+				return otherSphereCollider;
 		}
 
-		return false;
+		return null;
 	}
 
 	@Override

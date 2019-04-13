@@ -10,7 +10,11 @@ public abstract class Collider extends Component {
 
 	public static ArrayList<Collider> colliders = new ArrayList<>();
 
-	public abstract boolean canCollideWith(Collider otherCollider);
+	public abstract Collider canCollideWith(Collider otherCollider);
+	
+	
+	public float bounciness = 0.5f;
+	public float friction = 0.75f;
 
 	public static void CheckCollions() {
 		for (Collider collider : colliders) {
@@ -22,17 +26,17 @@ public abstract class Collider extends Component {
 		}
 	}
 
-	public static boolean CheckCollions(Collider collider) {
+	public static Collider CheckCollions(Collider collider) {
 
 		for (Collider targetCollider : colliders) {
 			if (collider != targetCollider) {
-				if (collider.canCollideWith(targetCollider)) {
-					return true;
+				Collider c = collider.canCollideWith(targetCollider);
+				if (c != null) {
+					return c;
 				}
 			}
 		}
-
-		return false;
+		return null;
 	}
 
 }

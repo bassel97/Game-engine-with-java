@@ -7,11 +7,19 @@ import gameEngine_core.Time;
 
 public class RigidBody extends Component {
 
-	public static Vector3f gravity = new Vector3f(0, -0.5f, 0);
+	public static Vector3f gravity = new Vector3f(0, -9.8f, 0);
 
 	public Vector3f velocity = new Vector3f();
 
+	public Vector3f accelaration = new Vector3f();
+	
 	public float damping = 0.85f;
+	
+	boolean isColliding = false;
+
+	public boolean isColliding() {
+		return isColliding;
+	}
 
 	@Override
 	public void start() {
@@ -24,39 +32,50 @@ public class RigidBody extends Component {
 
 		//System.out.println("Rigid Body velocity of " + gameObject.name + " " + velocity);
 		
+		isColliding = false;
+		
 		Collider collider = gameObject.getCollider();
 		
-		velocity.add(gravity);
+		accelaration.add(gravity);
+		
+		velocity = velocity.add(accelaration.mul((float)Time.deltaTime));
 		
 		Vector3f movementDircetion = new Vector3f(velocity).mul((float)Time.deltaTime);
 		
-		gameObject.transform.position.x += movementDircetion.x;
-
+		gameObject.transform.position.x += movementDircetion.x;		
+		Collider collidedWith = Collider.CheckCollions(collider);
 		if (collider != null) {
-			if (Collider.CheckCollions(collider)) {
+			if (collidedWith != null) {
+				isColliding = true;
+				
 				gameObject.transform.position.x -= movementDircetion.x;
 				velocity.x = 0;
 			}
 		}
 
 		gameObject.transform.position.y += movementDircetion.y;
-
+		collidedWith = Collider.CheckCollions(collider);
 		if (collider != null) {
-			if (Collider.CheckCollions(collider)) {
+			if (collidedWith != null) {
+				isColliding = true;
+				
 				gameObject.transform.position.y -= movementDircetion.y;
-				velocity.y = 0;
+				velocity.y = -collidedWith.bounciness * velocity.y;
+				
+				accelaration.x -= velocity.x * collidedWith.friction;				
 			}
 		}
 		
 		gameObject.transform.position.z += movementDircetion.z;
-
+		collidedWith = Collider.CheckCollions(collider);
 		if (collider != null) {
-			if (Collider.CheckCollions(collider)) {
+			if (collidedWith != null) {
+				isColliding = true;
+				
 				gameObject.transform.position.z -= movementDircetion.z;
 				velocity.z = 0;
 			}
 		}
-		
 	}
 
 	@Override

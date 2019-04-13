@@ -1,11 +1,12 @@
 package gameEngine_Physics;
 
 import org.joml.Vector3f;
-import org.joml.Vector4f;
+
+//import org.joml.Vector4f;
 
 public class BoxCollider extends Collider {
 
-	private Vector4f boxBoundary = new Vector4f();
+	private Vector3f boxBoundary = new Vector3f();
 
 	public BoxCollider(float x, float y, float z) {
 		colliders.add(this);
@@ -15,17 +16,17 @@ public class BoxCollider extends Collider {
 	}
 
 	@Override
-	public boolean canCollideWith(Collider otherCollider) {
+	public Collider canCollideWith(Collider otherCollider) {
 
 		if (otherCollider.getClass() == getClass()) {
 			BoxCollider otherBoxCollider = (BoxCollider) otherCollider;
 
-			Vector4f scaledBoundaryBox = new Vector4f(boxBoundary);
+			Vector3f scaledBoundaryBox = new Vector3f(boxBoundary);
 			scaledBoundaryBox.x *= gameObject.transform.scale.x;
 			scaledBoundaryBox.y *= gameObject.transform.scale.y;
 			scaledBoundaryBox.z *= gameObject.transform.scale.z;
 
-			Vector4f otherScaledBoundaryBox = new Vector4f(otherBoxCollider.boxBoundary);
+			Vector3f otherScaledBoundaryBox = new Vector3f(otherBoxCollider.boxBoundary);
 			otherScaledBoundaryBox.x *= otherBoxCollider.gameObject.transform.scale.x;
 			otherScaledBoundaryBox.y *= otherBoxCollider.gameObject.transform.scale.y;
 			otherScaledBoundaryBox.z *= otherBoxCollider.gameObject.transform.scale.z;
@@ -82,10 +83,13 @@ public class BoxCollider extends Collider {
 				}
 			}*/
 
-			return (xDistance < boundX) && (yDistance < boundY) && (zDistance < boundZ);
+			if((xDistance < boundX) && (yDistance < boundY) && (zDistance < boundZ))
+				return otherBoxCollider;
+			else
+				return null;
 		}
 
-		return false;
+		return null;
 	}
 
 	@Override
