@@ -29,6 +29,9 @@ public class RigidBody extends Component {
 
 	@Override
 	public void update() {
+		
+		if(!isActive)
+			return;
 
 		//System.out.println("Rigid Body velocity of " + gameObject.name + " " + velocity);
 		
@@ -38,9 +41,9 @@ public class RigidBody extends Component {
 		
 		accelaration.add(gravity);
 		
-		velocity = velocity.add(accelaration.mul((float)Time.deltaTime));
+		velocity = velocity.add(accelaration.mul((float)Time.fixedDeltaTime));
 		
-		Vector3f movementDircetion = new Vector3f(velocity).mul((float)Time.deltaTime);
+		Vector3f movementDircetion = new Vector3f(velocity).mul((float)Time.fixedDeltaTime);
 		
 		gameObject.transform.position.x += movementDircetion.x;		
 		Collider collidedWith = Collider.CheckCollions(collider);

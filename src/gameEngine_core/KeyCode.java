@@ -18,4 +18,6 @@ public class KeyCode {
 	
 	public static int space = GLFW.GLFW_KEY_SPACE;
 	
+	public static int escape = GLFW.GLFW_KEY_ESCAPE;
+	
 }

@@ -6,6 +6,8 @@ public abstract class Component {
 
 	public GameObject gameObject;
 	
+	protected boolean isActive = true;
+	
 	public abstract void start();
 
 	public abstract void update();
@@ -17,6 +19,10 @@ public abstract class Component {
 	public Component() {
 		components.add(this);
 
+	}
+	
+	public void SetActive(boolean active) {
+		isActive = active;
 	}
 
 }
