@@ -5,17 +5,12 @@ import network.NetworkManager;
 public class Main {
 
 	public static void main(String[] args) {
-
-		//System.out.println(Thread.currentThread());
-
-		/*GUI_Window guiWindow = new GUI_Window();
-		guiWindow.StartGUIWindow(Thread.currentThread());*/
 		
 		GUI_WindowController guiController = new GUI_WindowController();
-		
 		guiController.StartGameGUI();
 		
-		GameWindowController gameController = new GameWindowController();
+		GameWindowController gameController= new GameWindowController();
+		gameController.StartGame();
 		
 		try {
 			NetworkManager.GetInstance().interrupt();
@@ -25,7 +20,7 @@ public class Main {
 		
 		System.out.println(Thread.activeCount());
 		
-		guiController.Close();
+		guiController.EndGameGUI();
 		
 		
 		

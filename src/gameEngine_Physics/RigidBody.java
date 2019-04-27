@@ -7,7 +7,7 @@ import gameEngine_core.Time;
 
 public class RigidBody extends Component {
 
-	public static Vector3f gravity = new Vector3f(0, -9.8f, 0);
+	public static Vector3f gravity = new Vector3f(0, -9.8f * 3f, 0);
 
 	public Vector3f velocity = new Vector3f();
 
@@ -50,19 +50,23 @@ public class RigidBody extends Component {
 				
 				gameObject.transform.position.x -= movementDircetion.x;
 				velocity.x = 0;
+				
+				//collidedWith = Collider.CheckCollions(collider);
 			}
 		}
 
 		gameObject.transform.position.y += movementDircetion.y;
 		collidedWith = Collider.CheckCollions(collider);
 		if (collider != null) {
-			if (collidedWith != null) {
+			while (collidedWith != null) {
 				isColliding = true;
 				
 				gameObject.transform.position.y -= movementDircetion.y;
 				velocity.y = -collidedWith.bounciness * velocity.y;
 				
-				accelaration.x -= velocity.x * collidedWith.friction;				
+				accelaration.x -= velocity.x * collidedWith.friction;
+				
+				collidedWith = Collider.CheckCollions(collider);
 			}
 		}
 		
@@ -76,6 +80,16 @@ public class RigidBody extends Component {
 				velocity.z = 0;
 			}
 		}
+		
+		/*collidedWith = Collider.CheckCollions(collider);
+		if(collider != null) {
+			while (collidedWith != null) {
+				isColliding = true;
+				
+				collidedWith = Collider.CheckCollions(collider);
+			}
+		}*/
+		
 	}
 
 	@Override

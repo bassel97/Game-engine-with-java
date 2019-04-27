@@ -12,15 +12,21 @@ public class GameWindowController {
 
 	boolean waitingGUI = true;
 
+	GE_Window ge_window;
+
+	boolean closeGame = false;
+
 	public GameWindowController() {
 
 		gameWindowController = this;
 
 		PauseOnGUI();
-		
+	}
+
+	public void StartGame() {
 		System.out.println("Game Started");
 
-		GE_Window ge_window = new GE_Window("Cards game", 400, 300, false);
+		ge_window = new GE_Window("Boxes game", 1024, 720, false);
 
 		ge_window.init();
 
@@ -31,10 +37,9 @@ public class GameWindowController {
 		scene1.start();
 
 		double time = Time.getTime();
-		double deltaTime_min = 1.0/30.0;//1.0 / 60.0;		
-		
+		double deltaTime_min = 1.0 / 30.0;
 
-		while (!ge_window.shouldClose()) {
+		while (!ge_window.shouldClose() && !closeGame) {
 			Time.deltaTime = 0;
 
 			time = Time.getTime();
@@ -43,24 +48,18 @@ public class GameWindowController {
 
 			while (Time.deltaTime < deltaTime_min) {
 				Time.deltaTime = Time.getTime() - time;
-				// System.out.println("delta time " + Time.deltaTime + " time -
-				// time " + (Time.getTime() - time));
 			}
-			// System.out.println("frameCounter : " + frameCounter);
-
-
-			// System.out.println(Time.deltaTime);
 
 			scene1.update();
 
 			ge_window.swapBuffers();
 
-			if(Input.getKeyPress(KeyCode.escape)) {
-				GUI_WindowController.guiWindowController.StartGameGUI();
+			if (Input.getKeyPress(KeyCode.escape)) {
+				GUI_WindowController.guiWindowController.PauseGameGUI();
 				waitingGUI = true;
 				PauseOnGUI();
 			}
-			
+
 		}
 
 		ge_window.stop();
@@ -68,9 +67,8 @@ public class GameWindowController {
 		scene1.end();
 
 		System.out.println("Game Closed");
-
 	}
-	
+
 	public void PauseOnGUI() {
 		try {
 			if (waitingGUI) {
@@ -82,6 +80,10 @@ public class GameWindowController {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void StopGame() {
+		closeGame = true;
 	}
 
 }

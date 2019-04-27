@@ -63,10 +63,8 @@ public class NetworkManager extends Thread {
 	}
 
 	public void StartClient() {
-
-		// Connect to server
+		
 		try {
-			
 			clientSocket = new Socket("localhost", 9898);
 			
 			NetworkManager.GetInstance().clientsData.add(new SerializableGameObjectData());
@@ -95,10 +93,8 @@ public class NetworkManager extends Thread {
 	}
 
 	public void SetPlayerPos(int id, float x, float y) {
-
 		clientsData.get(id).xPos = x;
 		clientsData.get(id).yPos = y;
-
 	}
 
 }
