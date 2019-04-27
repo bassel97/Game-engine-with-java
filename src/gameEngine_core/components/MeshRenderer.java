@@ -88,4 +88,10 @@ public class MeshRenderer extends Component {
 		shader.removeFromGPU();
 	}
 
+	@Override
+	public Component getComponentCopy() {
+		MeshRenderer copy = new MeshRenderer((ModelWithUV) this.model, this.shader, this.texture, this.currentScene);
+		return copy;
+	}
+
 }

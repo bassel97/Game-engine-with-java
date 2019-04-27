@@ -6,6 +6,7 @@ import org.joml.Matrix4f;
 
 import gameEngine_Physics.BoxCollider;
 import gameEngine_Physics.Collider;
+import gameEngine_Physics.RigidBody;
 import gameEngine_Physics.SphereCollider;
 
 public class GameObject {
@@ -15,6 +16,8 @@ public class GameObject {
 	public final Transform transform = new Transform();
 
 	public String name;
+	
+	boolean isActive = true;
 
 	private ArrayList<Component> components = new ArrayList<>();
 
@@ -34,6 +37,10 @@ public class GameObject {
 	}
 
 	public void update() {
+		
+		if(!isActive)
+			return;
+		
 		for (Component component : components) {
 			component.update();
 		}
@@ -59,6 +66,10 @@ public class GameObject {
 		component.gameObject = this;
 	}
 	
+	public void SetActive(boolean active) {
+		isActive = active;
+	}
+	
 	public Collider getCollider(){
 		for (Component component : components) {
 			if(component.getClass() == Collider.class || component.getClass() == SphereCollider.class || component.getClass() == BoxCollider.class){
@@ -67,5 +78,29 @@ public class GameObject {
 		}
 		return null;
 	}
+	
+	public RigidBody getRigidBody(){
+		for (Component component : components) {
+			if(component.getClass() == RigidBody.class){
+				return (RigidBody) component;
+			}
+		}
+		return null;
+	}
 
+	public static GameObject Instantiate(GameObject target) {
+		GameObject copy = new GameObject(target.name + "Copy");
+		
+		copy.transform.position.set(target.transform.position);
+		copy.transform.rotation.set(target.transform.rotation);
+		copy.transform.scale.set(target.transform.scale);
+		
+		for (Component component : target.components) {
+			copy.addComponent( component.getComponentCopy() );
+		}
+		
+		copy.start();
+		
+		return copy;
+	}
 }

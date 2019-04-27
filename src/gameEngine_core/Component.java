@@ -24,5 +24,7 @@ public abstract class Component {
 	public void SetActive(boolean active) {
 		isActive = active;
 	}
+	
+	public abstract Component getComponentCopy();
 
 }

@@ -2,6 +2,8 @@ package gameEngine_Physics;
 
 import org.joml.Vector3f;
 
+import gameEngine_core.Component;
+
 //import org.joml.Vector4f;
 
 public class BoxCollider extends Collider {
@@ -21,6 +23,9 @@ public class BoxCollider extends Collider {
 		if (otherCollider.getClass() == getClass()) {
 			BoxCollider otherBoxCollider = (BoxCollider) otherCollider;
 
+			if(!otherBoxCollider.isActive)
+				return null;
+			
 			Vector3f scaledBoundaryBox = new Vector3f(boxBoundary);
 			scaledBoundaryBox.x *= gameObject.transform.scale.x;
 			scaledBoundaryBox.y *= gameObject.transform.scale.y;
@@ -41,47 +46,6 @@ public class BoxCollider extends Collider {
 			float boundX = (scaledBoundaryBox.x) / 2.0f + (otherScaledBoundaryBox.x) / 2.0f;
 			float boundY = (scaledBoundaryBox.y) / 2.0f + (otherScaledBoundaryBox.y) / 2.0f;
 			float boundZ = (scaledBoundaryBox.z) / 2.0f + (otherScaledBoundaryBox.z) / 2.0f;
-
-			/*System.out.println(gameObject.name);
-			System.out.println("X distance " + xDistance);
-			System.out.println("Y distance " + yDistance);
-			System.out.println("Z distance " + zDistance);
-
-			System.out.println("X bound " + boundX);
-			System.out.println("Y bound " + boundY);
-			System.out.println("Z bound " + boundZ);*/
-
-			/*if ((xDistance < boundX) && (yDistance < boundY) && (zDistance < boundZ)) {
-				if (xDistance < boundX && !xMoveConstraint) {
-					if (gameObject.transform.position.x < otherBoxCollider.gameObject.transform.position.x) {
-						gameObject.transform.position.x = otherBoxCollider.gameObject.transform.position.x
-								- (scaledBoundaryBox.x / 2.0f + otherScaledBoundaryBox.x / 2.0f);
-					} else {
-						gameObject.transform.position.x = otherBoxCollider.gameObject.transform.position.x
-								+ (scaledBoundaryBox.x / 2.0f + otherScaledBoundaryBox.x / 2.0f);
-					}
-				}
-
-				if (yDistance < boundY && !yMoveConstraint) {
-					if (gameObject.transform.position.y < otherBoxCollider.gameObject.transform.position.y) {
-						gameObject.transform.position.y = otherBoxCollider.gameObject.transform.position.y
-								- (scaledBoundaryBox.y / 2.0f + otherScaledBoundaryBox.y / 2.0f);
-					} else {
-						gameObject.transform.position.y = otherBoxCollider.gameObject.transform.position.y
-								+ (scaledBoundaryBox.y / 2.0f + otherScaledBoundaryBox.y / 2.0f);
-					}
-				}
-
-				if (zDistance < boundZ && !zMoveConstraint) {
-					if (gameObject.transform.position.z < otherBoxCollider.gameObject.transform.position.z) {
-						gameObject.transform.position.z = otherBoxCollider.gameObject.transform.position.z
-								- (scaledBoundaryBox.z / 2.0f + otherScaledBoundaryBox.z / 2.0f);
-					} else {
-						gameObject.transform.position.z = otherBoxCollider.gameObject.transform.position.z
-								+ (scaledBoundaryBox.z / 2.0f + otherScaledBoundaryBox.z / 2.0f);
-					}
-				}
-			}*/
 
 			if((xDistance < boundX) && (yDistance < boundY) && (zDistance < boundZ))
 				return otherBoxCollider;
@@ -108,6 +72,12 @@ public class BoxCollider extends Collider {
 	public void end() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Component getComponentCopy() {
+		BoxCollider copy = new BoxCollider(boxBoundary.x, boxBoundary.y, boxBoundary.z);
+		return copy;
 	}
 
 }

@@ -14,29 +14,31 @@ public class GameServer extends Thread {
         this.socket = socket;
         this.clientNumber = clientNumber;
         System.out.println("New connection with client# " + clientNumber + " at " + socket);
+        
+        NetworkManager.GetInstance().clientsData.add(new SerializableGameObjectData());
     }
-
-    public SerializableObjectData clientData  = new SerializableObjectData();
     
     public void run() {
         try {
+        	
+        	PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));    
+                        
             out.println(clientNumber);
 
+            System.out.println("Sent " + clientNumber);
+            
             while (true) {
-
+            	
             	String response = in.readLine();
             	
             	String[] responseParts = response.split(" ");
-				NetworkManager.GetInstance().clientsData[Integer.parseInt(responseParts[0])].xPos = Float.parseFloat(responseParts[1]);
-				NetworkManager.GetInstance().clientsData[Integer.parseInt(responseParts[0])].yPos = Float.parseFloat(responseParts[2]);
             	
+            	NetworkManager.GetInstance().clientsData.get(Integer.parseInt(responseParts[0])).SetWithString(responseParts);
             	
-            	String myPos = "0 " + clientData.xPos + " " + clientData.yPos;
-            	out.println(myPos);
+            	out.println(NetworkManager.GetInstance().clientsData.get(NetworkManager.GetInstance().clientTag));
+            	
             }
         } catch (Exception e) {
             System.out.println("Error handling client# " + clientNumber + ": " + e);
@@ -45,7 +47,7 @@ public class GameServer extends Thread {
             try {
                 socket.close();
             } catch (Exception e) {
-                System.out.println("Couldn't close a socket, what's going on?");
+                System.out.println("Couldn't close the socket");
                 e.printStackTrace();
             }
             System.out.println("Connection with client# " + clientNumber + " closed");

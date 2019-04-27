@@ -12,38 +12,39 @@ public class GameClient extends Thread {
 	public GameClient(Socket socket) {
 
 		this.socket = socket;
-
-		clientData = new SerializableObjectData();
 	}
 
 	public static int tagNumber;
 
-	public SerializableObjectData clientData;
-
 	public void run() {
 
-		BufferedReader in;
 		try {
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
+			System.out.println("Reading Tag");
+
 			tagNumber = Integer.parseInt(in.readLine());
-			System.out.println(tagNumber);
+			System.out.println("Tag Number = " + tagNumber);
 
-			String message = "";
+			NetworkManager.GetInstance().clientTag = tagNumber;
+
 			while (!Thread.interrupted()) {
-				message = tagNumber + " " + clientData.xPos + " " + clientData.yPos;
 
-				out.println(message); // send message to server
+				if (NetworkManager.GetInstance().clientTag >= NetworkManager.GetInstance().clientsData.size()) {
+					NetworkManager.GetInstance().clientsData.add(new SerializableGameObjectData());
+				}
+
+				out.println(NetworkManager.GetInstance().clientsData.get(NetworkManager.GetInstance().clientTag));
 
 				String response = in.readLine();
 
 				String[] responseParts = response.split(" ");
-				NetworkManager.GetInstance().clientsData[Integer.parseInt(responseParts[0])].xPos = Float
-						.parseFloat(responseParts[1]);
-				NetworkManager.GetInstance().clientsData[Integer.parseInt(responseParts[0])].yPos = Float
-						.parseFloat(responseParts[2]);
+
+				NetworkManager.GetInstance().clientsData.get(Integer.parseInt(responseParts[0]))
+						.SetWithString(responseParts);
 
 			}
 		} catch (Exception e) {

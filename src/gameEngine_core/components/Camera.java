@@ -71,4 +71,11 @@ public class Camera extends Component {
 		return degrees * (float) (Math.PI / 180d);
 	}
 
+	@Override
+	public Component getComponentCopy() {
+		Camera copy = new Camera();
+		
+		return copy;
+	}
+
 }

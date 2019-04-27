@@ -3,6 +3,7 @@ package network;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class NetworkManager extends Thread {
 
@@ -16,11 +17,9 @@ public class NetworkManager extends Thread {
 	}
 
 	private NetworkManager() {
-
-		for (int i = 0; i < clientsData.length; i++) {
-			clientsData[i] = new SerializableObjectData();
-		}
 		
+		clientsData.add(new SerializableGameObjectData());
+
 	}
 
 	Socket clientSocket;
@@ -34,9 +33,11 @@ public class NetworkManager extends Thread {
 	GameClient gameClinet;
 	GameServer gameServer;
 
-	int clientNumber = 1;
+	private int clientNumber = 1;
+	
+	public int clientTag = 0;
 
-	public SerializableObjectData[] clientsData = new SerializableObjectData[2];
+	public ArrayList<SerializableGameObjectData> clientsData = new ArrayList<SerializableGameObjectData>();
 
 	public void StartServer() {
 
@@ -50,7 +51,6 @@ public class NetworkManager extends Thread {
 					gameServer = new GameServer(serverSocketListener.accept(), clientNumber++);
 
 					gameServer.start();
-					gameServer.join();
 				}
 			} finally {
 				serverSocketListener.close();
@@ -66,7 +66,10 @@ public class NetworkManager extends Thread {
 
 		// Connect to server
 		try {
+			
 			clientSocket = new Socket("localhost", 9898);
+			
+			NetworkManager.GetInstance().clientsData.add(new SerializableGameObjectData());
 
 			gameClinet = new GameClient(clientSocket);
 			gameClinet.start();
@@ -91,16 +94,11 @@ public class NetworkManager extends Thread {
 			StartClient();
 	}
 
-	public void SetPlayerPos(float x, float y) {
-		if (gameClinet != null) {
-			gameClinet.clientData.xPos = x;
-			gameClinet.clientData.yPos = y;
-		}
+	public void SetPlayerPos(int id, float x, float y) {
 
-		if (gameServer != null) {
-			gameServer.clientData.xPos = x;
-			gameServer.clientData.yPos = y;
-		}
+		clientsData.get(id).xPos = x;
+		clientsData.get(id).yPos = y;
+
 	}
 
 }

@@ -23,7 +23,6 @@ public class RigidBody extends Component {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -32,8 +31,6 @@ public class RigidBody extends Component {
 		
 		if(!isActive)
 			return;
-
-		//System.out.println("Rigid Body velocity of " + gameObject.name + " " + velocity);
 		
 		isColliding = false;
 		
@@ -83,8 +80,14 @@ public class RigidBody extends Component {
 
 	@Override
 	public void end() {
-		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public Component getComponentCopy() {
+		RigidBody copy = new RigidBody();
+		copy.isActive = isActive;
+		return copy;
 	}
 
 }

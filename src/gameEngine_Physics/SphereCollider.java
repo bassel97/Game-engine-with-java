@@ -1,5 +1,6 @@
 package gameEngine_Physics;
 
+import gameEngine_core.Component;
 
 public class SphereCollider extends Collider {
 
@@ -46,6 +47,12 @@ public class SphereCollider extends Collider {
 	public void end() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public Component getComponentCopy() {
+		SphereCollider copy = new SphereCollider(radius);
+		return copy;
 	}
 
 }
