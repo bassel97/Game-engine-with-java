@@ -38,6 +38,8 @@ public class NetworkManager extends Thread {
 	public int clientTag = 0;
 
 	public ArrayList<SerializableGameObjectData> clientsData = new ArrayList<SerializableGameObjectData>();
+	
+	public String clientIP = "localhost";
 
 	public void StartServer() {
 
@@ -65,7 +67,7 @@ public class NetworkManager extends Thread {
 	public void StartClient() {
 		
 		try {
-			clientSocket = new Socket("localhost", 9898);
+			clientSocket = new Socket(clientIP, 9898);
 			
 			NetworkManager.GetInstance().clientsData.add(new SerializableGameObjectData());
 

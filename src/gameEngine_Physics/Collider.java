@@ -13,7 +13,7 @@ public abstract class Collider extends Component {
 	public abstract Collider canCollideWith(Collider otherCollider);
 	
 	
-	public float bounciness = 0.5f;
+	public float bounciness = 0.1f;
 	public float friction = 0.75f;
 
 	public static void CheckCollions() {

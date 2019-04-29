@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import network.NetworkManager;
 
@@ -77,15 +79,23 @@ public class GUI_WindowController  {
 			}
 		});
 
+		JTextField clientServerIp = new JTextField(NetworkManager.GetInstance().clientIP,2);
+		
+		clientServerIp.setMaximumSize(new Dimension(200, 30));
+		
 		JButton startAsClient = new JButton("Start As Client");
 		startAsClient.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
 				NetworkManager.GetInstance().isServer = false;
+				
+				NetworkManager.GetInstance().clientIP = clientServerIp.getText();
+				
 				NetworkManager.GetInstance().start();
 
 				isGameRunning = true;
+				
 				jFrame.setVisible(false);
 
 				try {
@@ -102,9 +112,11 @@ public class GUI_WindowController  {
 		start.setAlignmentX(Component.CENTER_ALIGNMENT);
 		startAsServer.setAlignmentX(Component.CENTER_ALIGNMENT);
 		startAsClient.setAlignmentX(Component.CENTER_ALIGNMENT);
+		clientServerIp.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		panel.add(start);
 		panel.add(startAsServer);
+		panel.add(clientServerIp);
 		panel.add(startAsClient);
 
 		jFrame.add(panel);
