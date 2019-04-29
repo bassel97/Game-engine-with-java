@@ -49,14 +49,14 @@ public class NetworkManager extends Thread {
 
 			serverSocketListener = new ServerSocket(9898);
 			try {
-				while (!Thread.interrupted()) {
-					gameServer = new GameServer(serverSocketListener.accept(), clientNumber++);
+				//while (!Thread.interrupted()) {
+				gameServer = new GameServer(serverSocketListener.accept(), clientNumber++);
 
-					gameServer.start();
-				}
+				gameServer.start();
+				//}
 			} finally {
 				serverSocketListener.close();
-				System.out.println("Server Closed");
+				//System.out.println("Server Closed");
 			}
 
 		} catch (Exception e) {
