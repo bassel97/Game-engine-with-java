@@ -5,6 +5,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import main.GUI_WindowController;
+import main.GameWindowController;
+
 public class GameServer extends Thread {
 	
 	private Socket socket;
@@ -51,6 +54,10 @@ public class GameServer extends Thread {
                 e.printStackTrace();
             }
             System.out.println("Connection with client# " + clientNumber + " closed");
+            
+            System.out.println("HE QUIT SO ... YOU WON");
+			GUI_WindowController.guiWindowController.gameState = "HE QUIT SO ... YOU WON";
+			GameWindowController.gameWindowController.StopGame();
         }
     }
 

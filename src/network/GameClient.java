@@ -5,6 +5,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import main.GUI_WindowController;
+import main.GameWindowController;
+
 public class GameClient extends Thread {
 
 	public Socket socket;
@@ -48,7 +51,11 @@ public class GameClient extends Thread {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			
+			System.out.println("HE QUIT SO ... YOU WON");
+			GUI_WindowController.guiWindowController.gameState = "HE QUIT SO ... YOU WON";
+			GameWindowController.gameWindowController.StopGame();
 		}
 
 	}
